@@ -1,0 +1,26 @@
+Package: STMotif
+Type: Package
+Title: Discovery of Motifs in Spatial-Time Series
+Version: 2.0.0
+Authors@R: c(
+    person("Heraldo", "Borges", email = "stmotif@eic.cefet-rj.br", role = c("aut", "cre"), comment = "CEFET/RJ"),
+    person("Amin", "Bazaz", role = c("aut"), comment = "Polytech'Montpellier"),
+    person("Eduardo", "Ogasawara", role = c("aut"), comment = "CEFET/RJ"))
+Maintainer: Heraldo Borges <stmotif@eic.cefet-rj.br>
+Description: Allow to identify motifs in spatial-time series. A motif is a previously unknown subsequence of a (spatial) time series with relevant number of occurrences. For this purpose, the Combined Series Approach (CSA) is used.
+License: GPL-2 | GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: stats, ggplot2, reshape2, scales, grDevices, RColorBrewer,
+        shiny
+RoxygenNote: 6.1.1
+Suggests: knitr, rmarkdown, testthat
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2020-01-23 12:49:53 UTC; heraldoborges
+Author: Heraldo Borges [aut, cre] (CEFET/RJ),
+  Amin Bazaz [aut] (Polytech'Montpellier),
+  Eduardo Ogasawara [aut] (CEFET/RJ)
+Depends: R (>= 3.5.0)
+Repository: CRAN
+Date/Publication: 2020-01-23 13:20:05 UTC

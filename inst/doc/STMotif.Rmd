@@ -1,0 +1,122 @@
+---
+title: "STMotif R Package"
+author: "Heraldo Borges, Amin Bazaz, Eduardo Ogasawara"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Spatial-Time Motif Discovery with STMotif}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  
+---
+
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  comment = "#>"
+)
+```
+
+The goal of the `STSMotif` R package is to allows the discovery and ranking of a motif in spatial-time series quickly and efficiently.
+
+
+```{r, echo=FALSE}
+source(file = "../R/mainFunction.R")
+source(file = "../R/subFunction.R")
+source(file = "../R/visualization.R")
+library(stats)
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+```
+
+
+### Introduction
+
+A pattern that significantly occurs in a time series is called a motif. In spatial time series data, these patterns may not be substantially present in a single time series but dispersed over several times series, limited in both space and time. The `STMotif R package` was developed to simplify the Spatio-temporal data mining on the search for these motifs. We present the functions available in `STMotif package` through the sample dataset, also available in this package.
+
+First, install the package by typing:
+
+```{r, eval = FALSE}
+install.packages("STMotif")
+```
+
+Then, load the package by typing:
+
+```{r, eval = FALSE}
+library(STMotif)
+```
+
+It provides two categories of functions: for discovering and ranking motifs (CSAMiningProcess) and functions for viewing the identified motifs.
+
+
+### 1. CSAMiningProcess
+
+ 1. The function `NormSAX` allows the normalization and SAX indexing of the dataset.
+ 
+```{r, echo=TRUE}
+
+# The process is launched on the provided example dataset
+dim(D <- STMotif::example_dataset)
+
+# Normalizartion and SAX indexing
+DS <- NormSAX(D = STMotif::example_dataset,a =5)
+
+# Information of the normalized and SAX indexing dataset 
+# The candidates built 
+head(NormSAX(D = STMotif::example_dataset, a = 5)[,1:10])
+
+```
+
+
+
+2. The function `SearchSTMotifs` allows to check and filter the stmotifs, grouping the motifs from the neighboring block. 
+
+
+```{r, echo=TRUE}
+# The list of motifs 
+# stmotifs <- SearchSTMotifs(D,DS,w,a,sb,tb,si,ka)
+stmotifs <- SearchSTMotifs(D,DS,4,5,4,10,2,2)
+stmotifs[[1]]
+```
+
+
+
+3. The function `RankSTMotifs` allows to rank the stmotifs list, making a balance between distance among the occurrences of a motif with the encoded information on the motif itself and his quantity. 
+
+```{r, echo=TRUE}
+# The rank list of stmotifs 
+rstmotifs <- RankSTMotifs(stmotifs)
+rstmotifs[[1]]
+```
+
+
+4.All this process can be summarized in the function `CSAMiningProcess` which performs all the steps listed above.
+
+```{r, echo=TRUE}
+# CSAMiningProcess
+rstmotifs <- RankSTMotifs(stmotifs)
+rstmotifs[[1]]
+```
+
+
+### 2. Visualization
+
+- Plot a heatmap of the dataset and highlight the selected motifs from the list
+
+```{r fig, fig.height = 4, fig.width = 5, fig.align = "center"}
+display_motifsDataset(dataset = STMotif::example_dataset, rstmotifs[c(1:4)],  5)
+```
+
+
+
+- Plot the selected spatial-time series with the selected motifs highlighted
+
+```{r fig1, fig.height = 4, fig.width = 5, fig.align = "center"}
+display_motifsSTSeries(dataset = STMotif::example_dataset,rstmotifs[c(1:4)],space = c(1:4,10:12))
+```
+
+
