@@ -2,26 +2,25 @@
 % Please edit documentation in R/mainFunction.R
 \name{STSADatasetAdjust}
 \alias{STSADatasetAdjust}
-\title{Adjust a Dataset
-Adjust the dimensions of a dataset to build the blocks}
+\title{Adjust a Dataset}
 \usage{
 STSADatasetAdjust(D, tb, sb)
 }
 \arguments{
-\item{D}{Dataset containing numeric values}
+\item{D}{Dataset containing numeric values.}
 
-\item{tb}{Temporal block size}
+\item{tb}{Temporal block size (number of rows per block).}
 
-\item{sb}{Spatial block size}
+\item{sb}{Spatial block size (number of columns per block).}
 }
 \value{
-Dataset adjusted to build the blocks.
+Dataset with rows and columns trimmed to be divisible by
+  \code{tb} and \code{sb}, respectively.
 }
 \description{
-Adjust a Dataset
-Adjust the dimensions of a dataset to build the blocks
+Adjusts the dimensions of a dataset so that it can be evenly divided
+into spatio-temporal blocks of size \code{tb} x \code{sb}.
 }
 \examples{
-#Adjust a block
 D <- STSADatasetAdjust(STMotif::example_dataset, 20, 12)
 }

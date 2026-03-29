@@ -2,44 +2,49 @@
 % Please edit documentation in R/mainFunction.R
 \name{CSAMiningProcess}
 \alias{CSAMiningProcess}
-\title{CSAMiningProcess}
+\title{CSA Datamining Process}
 \usage{
 CSAMiningProcess(D, DS, w, a, sb, tb, si, ka)
 }
 \arguments{
-\item{D}{Dataset containing numeric values}
+\item{D}{Dataset containing numeric values.}
 
-\item{DS}{Dataset containing SAX encoded values}
+\item{DS}{Dataset containing SAX encoded values (recomputed internally;
+this parameter is kept for backward compatibility).}
 
-\item{w}{Word Size}
+\item{w}{Word size (motif length in SAX symbols).}
 
-\item{a}{Number of letters to do the encode}
+\item{a}{Number of letters in the SAX alphabet.}
 
-\item{sb}{Spatial block size}
+\item{sb}{Spatial block size (number of columns per block).}
 
-\item{tb}{Temporal block size}
+\item{tb}{Temporal block size (number of rows per block).}
 
-\item{si}{Minimum number of occurrences inside each block}
+\item{si}{Minimum number of occurrences inside each block (sigma).}
 
-\item{ka}{Minimum number of spatial-time series with occurrences inside each block}
+\item{ka}{Minimum number of spatial series with occurrences inside
+each block (kappa).}
 }
 \value{
-Return a list of ranked motifs. Each motif contains the information [isaxcode, recmatrix, vectst, rank], as described:
-
-isaxcode: Motif sequences in character format
-
-recmatrix: Matrix giving as information the blocks containing this motif
-
-vectst: Coordinate of the start positions of the motif in the original dataset
-
-rank: L of information used for motif ranking, as [dist, word, qtd, proj]
+A list of ranked motifs. Each motif contains:
+\describe{
+  \item{isaxcode}{Motif sequence in character format.}
+  \item{recmatrix}{Matrix indicating which blocks contain this motif.}
+  \item{vecst}{Data frame with columns \code{s} (spatial) and \code{t}
+    (temporal) giving the start positions of the motif in the original
+    dataset.}
+  \item{rank}{List with ranking components: \code{dist}, \code{word},
+    \code{qtd}, \code{proj}.}
+}
 }
 \description{
-CSA Datamining Process
+Performs the complete Combined Series Approach (CSA) workflow:
+normalization with SAX encoding, motif discovery, and ranking.
+This is a convenience wrapper around \code{\link{NormSAX}},
+\code{\link{SearchSTMotifs}}, and \code{\link{RankSTMotifs}}.
 }
 \examples{
-#CSA Datamining process
 D  <- STMotif::example_dataset
-DS <- NormSAX(STMotif::example_dataset,5)
-rmotif <- CSAMiningProcess(D,DS,4,5,4,10,2,2)
+DS <- NormSAX(STMotif::example_dataset, 5)
+rmotif <- CSAMiningProcess(D, DS, 4, 5, 4, 10, 2, 2)
 }

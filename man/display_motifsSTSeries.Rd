@@ -2,29 +2,37 @@
 % Please edit documentation in R/visualization.R
 \name{display_motifsSTSeries}
 \alias{display_motifsSTSeries}
-\title{Plot the selected spatial-time series with the selected motifs highlighted}
+\title{Plot Spatial-Time Series with Highlighted Motifs}
 \usage{
-display_motifsSTSeries(dataset, rmotifs, space = c(1:length(dataset)))
+display_motifsSTSeries(dataset, rstmotifs, space = seq_len(ncol(dataset)))
 }
 \arguments{
-\item{dataset}{Dataset containing numeric values}
+\item{dataset}{Data frame or matrix containing numeric values.
+Each column represents a spatial series, each row a time point.}
 
-\item{rmotifs}{List of ranked motifs}
+\item{rstmotifs}{List of ranked motifs, as returned by
+\code{\link{RankSTMotifs}} or \code{\link{CSAMiningProcess}}.}
 
-\item{space}{Select a range of columns to plot the corresponding spatial series}
+\item{space}{Integer vector specifying which columns (spatial series)
+to display. Defaults to all columns.}
 }
 \value{
-Selected spatial series with the selected motifs highlighted
+A \code{\link[ggplot2]{ggplot}} object showing the time series
+  with motif occurrences highlighted in color.
 }
 \description{
-Plot the selected spatial-time series with the selected motifs highlighted
+Displays the selected spatial-time series and highlights the segments
+corresponding to the discovered motifs using distinct colors.
 }
 \examples{
-#Launch all the workflow
-#Plot the result
 D  <- STMotif::example_dataset
-DS <- NormSAX(STMotif::example_dataset,5)
-stmotifs <- SearchSTMotifs(D,DS,4,5,4,10,2,2)
+DS <- NormSAX(STMotif::example_dataset, 5)
+stmotifs <- SearchSTMotifs(D, DS, 4, 5, 4, 10, 2, 2)
 rstmotifs <- RankSTMotifs(stmotifs)
-display_motifsSTSeries(dataset = STMotif::example_dataset,rstmotifs[c(1:4)],space = c(1:4,10:12))
+display_motifsSTSeries(
+  dataset = STMotif::example_dataset,
+  rstmotifs[c(1:4)],
+  space = c(1:4, 10:12)
+)
+
 }

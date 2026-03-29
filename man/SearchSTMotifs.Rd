@@ -2,42 +2,46 @@
 % Please edit documentation in R/mainFunction.R
 \name{SearchSTMotifs}
 \alias{SearchSTMotifs}
-\title{SearchSTMotifs}
+\title{Search for Spatial-Time Motifs}
 \usage{
 SearchSTMotifs(D, DS, w, a, sb, tb, si = 3, ka = 3)
 }
 \arguments{
-\item{D}{Dataset containing numeric values}
+\item{D}{Dataset containing numeric values.}
 
-\item{DS}{Dataset containing SAX encoded values}
+\item{DS}{Dataset containing SAX encoded values (as returned by
+\code{\link{NormSAX}}).}
 
-\item{w}{Word Size}
+\item{w}{Word size (motif length in SAX symbols).}
 
-\item{a}{Number of letters to do the encode}
+\item{a}{Number of letters in the SAX alphabet.}
 
-\item{sb}{"Space slice" Number of columns in each block}
+\item{sb}{Spatial block size (number of columns per block).}
 
-\item{tb}{"Time slice" Number of rows in each block}
+\item{tb}{Temporal block size (number of rows per block).}
 
-\item{si}{Support of Global Occurrence (GO)}
+\item{si}{Minimum number of occurrences inside each block (sigma).
+Default: 3.}
 
-\item{ka}{Support for Spatial Occurrence (SO)}
+\item{ka}{Minimum number of spatial series with occurrences inside
+each block (kappa). Default: 3.}
 }
 \value{
-Return a list of identified motifs. Each motif contains the information [isaxcode, recmatrix, vectst], as described:
-
-isaxcode: Motif sequences in character format
-
-recmatrix: Matrix giving as information the blocks containing this motif
-
-vectst: Coordinate of the start positions of the motif in the original dataset
+A list of identified motifs. Each motif contains:
+\describe{
+  \item{isaxcode}{Motif sequence in character format.}
+  \item{recmatrix}{Matrix indicating which blocks contain this motif.}
+  \item{vecst}{Data frame with columns \code{s} and \code{t} giving
+    the start positions in the original dataset.}
+}
 }
 \description{
-Search for Spatial-time Motifs
+Discovers motifs in the spatio-temporal blocks of the dataset,
+validates occurrence constraints, and groups motifs from neighboring
+blocks.
 }
 \examples{
-#Search for Spatial-time Motifs
 D  <- STMotif::example_dataset
-DS <- NormSAX(STMotif::example_dataset,5)
-stmotifs <- SearchSTMotifs(D,DS,4,5,4,10,2,2)
+DS <- NormSAX(STMotif::example_dataset, 5)
+stmotifs <- SearchSTMotifs(D, DS, 4, 5, 4, 10, 2, 2)
 }

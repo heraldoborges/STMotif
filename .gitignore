@@ -1,0 +1,29 @@
+# R history and environment
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+
+# RStudio project files (keep .Rproj in repo)
+.Rproj.user/
+
+# R build outputs
+*.Rcheck/
+*.tar.gz
+
+# Package build directory
+src/*.o
+src/*.so
+src/*.dll
+
+# Compiled vignettes
+inst/doc/
+
+# IDE
+.vscode/
+.idea/
+
+# System files
+Thumbs.db
+*~
+\#*\#

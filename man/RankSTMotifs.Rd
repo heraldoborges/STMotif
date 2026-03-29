@@ -2,25 +2,27 @@
 % Please edit documentation in R/mainFunction.R
 \name{RankSTMotifs}
 \alias{RankSTMotifs}
-\title{Rank the STmotifs
-Rank motifs by their quality}
+\title{Rank Spatial-Time Motifs}
 \usage{
 RankSTMotifs(stmotifs)
 }
 \arguments{
-\item{stmotifs}{List of identified motifs}
+\item{stmotifs}{List of identified motifs (as returned by
+\code{\link{SearchSTMotifs}}).}
 }
 \value{
-The ranked version of the identified list of motifs
+A list of motifs sorted by decreasing quality score. Each motif
+  gains a \code{rank} component with \code{dist}, \code{word},
+  \code{qtd}, and \code{proj} values.
 }
 \description{
-Rank the STmotifs
-Rank motifs by their quality
+Ranks the discovered motifs by computing a composite quality score
+that balances spatial-temporal proximity of occurrences, entropy of
+the SAX encoding, and quantity of occurrences.
 }
 \examples{
-#Search for Spatial-time Motifs
 D  <- STMotif::example_dataset
-DS <- NormSAX(STMotif::example_dataset,5)
-stmotifs <- SearchSTMotifs(D,DS,4,5,4,10,2,2)
+DS <- NormSAX(STMotif::example_dataset, 5)
+stmotifs <- SearchSTMotifs(D, DS, 4, 5, 4, 10, 2, 2)
 rstmotifs <- RankSTMotifs(stmotifs)
 }

@@ -1,0 +1,12 @@
+^\.github$
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^README-.*\.png$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^\.lintr$
+^CONTRIBUTING\.md$
+^CODE_OF_CONDUCT\.md$
+^versions$

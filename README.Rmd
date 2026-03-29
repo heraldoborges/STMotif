@@ -1,0 +1,145 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "70%",
+  dpi = 150
+)
+```
+
+# STMotif <img src="man/figures/logo.png" align="right" height="139" alt="STMotif logo" />
+
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/STMotif)](https://CRAN.R-project.org/package=STMotif)
+[![R-CMD-check](https://github.com/heraldoborges/STMotif/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/heraldoborges/STMotif/actions/workflows/R-CMD-check.yaml)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/STMotif)](https://CRAN.R-project.org/package=STMotif)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+<!-- badges: end -->
+
+**STMotif** discovers and ranks motifs in spatial-time series using the
+Combined Series Approach (CSA). A *motif* is a previously unknown
+subsequence of a spatial time series with a relevant number of
+occurrences. The package uses SAX (Symbolic Aggregate approXimation)
+encoding for efficient pattern matching across space and time dimensions.
+
+## Installation
+
+Install the stable version from CRAN:
+
+```r
+install.packages("STMotif")
+```
+
+Or install the development version from GitHub:
+
+```r
+# install.packages("pak")
+pak::pak("heraldoborges/STMotif")
+```
+
+## Quick start
+
+```{r example}
+library(STMotif)
+
+# Load the example dataset (20 time points × 12 spatial series)
+D <- STMotif::example_dataset
+dim(D)
+```
+
+### Full workflow in one call
+
+```{r workflow}
+# 1. Normalize + SAX encode
+DS <- NormSAX(D, a = 5)
+
+# 2. Discover and rank motifs (all-in-one)
+rstmotifs <- CSAMiningProcess(D, DS, w = 4, a = 5, sb = 4, tb = 10, si = 2, ka = 2)
+
+# Top-ranked motif
+cat("Top motif:", rstmotifs[[1]]$isaxcod, "\n")
+cat("Occurrences:", nrow(rstmotifs[[1]]$vecst), "\n")
+cat("Projection score:", round(rstmotifs[[1]]$rank$proj, 4), "\n")
+```
+
+### Visualization
+
+```{r heatmap, fig.alt="Heatmap of the dataset with motif positions highlighted as colored squares"}
+# Heatmap with highlighted motif positions
+display_motifsDataset(
+  dataset  = D,
+  rstmotifs = rstmotifs[1:4],
+  alpha    = 5
+)
+```
+
+```{r timeseries, fig.alt="Time series plots with motif segments highlighted in color"}
+# Time series with highlighted motif segments
+display_motifsSTSeries(
+  dataset   = D,
+  rstmotifs = rstmotifs[1:4],
+  space     = c(1:4, 10:12)
+)
+```
+
+### Step-by-step workflow
+
+For more control, you can run each step individually:
+
+```{r stepbystep}
+# Step 1: Normalize and SAX-encode the dataset
+DS <- NormSAX(D, a = 5)
+head(DS[, 1:6])
+
+# Step 2: Search for motifs in spatio-temporal blocks
+stmotifs <- SearchSTMotifs(D, DS, w = 4, a = 5, sb = 4, tb = 10, si = 2, ka = 2)
+cat(length(stmotifs), "motifs found\n")
+
+# Step 3: Rank motifs by quality
+rstmotifs <- RankSTMotifs(stmotifs)
+cat("Top motif:", rstmotifs[[1]]$isaxcod, "\n")
+```
+
+## Parameters
+
+| Parameter | Description | Typical values |
+|-----------|-------------|----------------|
+| `a` | SAX alphabet size | 3–7 |
+| `w` | Motif length (SAX symbols) | 3–6 |
+| `sb` | Spatial block size (columns) | 3–6 |
+| `tb` | Temporal block size (rows) | 5–20 |
+| `si` | Min occurrences per block (σ) | 2–5 |
+| `ka` | Min spatial series per block (κ) | 2–4 |
+
+## Documentation
+
+- [Package vignette](https://CRAN.R-project.org/package=STMotif/vignettes/STMotif.html)
+  — full walkthrough with explanations
+- [Reference manual](https://CRAN.R-project.org/package=STMotif/STMotif.pdf)
+  — all function documentation
+
+## Citation
+
+If you use STMotif in your research, please cite:
+
+```{r citation, echo=FALSE, comment=""}
+citation("STMotif")
+```
+
+## Contributing
+
+Contributions are welcome! Please open an
+[issue](https://github.com/heraldoborges/STMotif/issues) for bug reports
+or feature requests, or submit a pull request.
+
+## License
+
+GPL-3 © Heraldo Borges, Amin Bazaz, Eduardo Ogasawara

@@ -3,12 +3,27 @@
 \docType{data}
 \name{example_dataset}
 \alias{example_dataset}
-\title{Example of dataset}
-\format{The dimensions of the dataset are 20 rows and 12 columns and this dataset contains 12 spatial-time series.}
+\title{Example Spatial-Time Series Dataset}
+\format{
+A data frame with 20 rows and 12 columns. Each column represents
+  a spatial-time series and each row represents a time point. All values
+  are numeric.
+}
+\source{
+Synthetic data generated for demonstration purposes.
+}
 \usage{
 example_dataset
 }
 \description{
-Toy example to launch functions.
+A synthetic toy dataset containing 12 spatial-time series, each with
+20 time points. Used to demonstrate the motif discovery functions in
+this package.
 }
-\keyword{example_dataset}
+\examples{
+data(example_dataset)
+dim(example_dataset)
+# [1] 20 12
+
+}
+\keyword{datasets}

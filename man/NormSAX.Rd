@@ -2,22 +2,25 @@
 % Please edit documentation in R/mainFunction.R
 \name{NormSAX}
 \alias{NormSAX}
-\title{Normalize the data and SAX indexing}
+\title{Normalize and SAX Encode a Dataset}
 \usage{
 NormSAX(D, a)
 }
 \arguments{
-\item{D}{Dataset containing numeric values}
+\item{D}{Dataset containing numeric values.}
 
-\item{a}{Number of letters use to encode}
+\item{a}{Number of letters in the SAX alphabet.}
 }
 \value{
-A normalized and encoded dataset for a given alphabet a
+A data frame with the same dimensions as \code{D}, containing
+  SAX letter encodings (characters from \code{a} to the \code{a}-th
+  letter of the alphabet).
 }
 \description{
-Normalize the data and SAX indexing
+Applies z-score normalization to the entire dataset and encodes
+the values using the Symbolic Aggregate approXimation (SAX) with
+an alphabet of size \code{a}.
 }
 \examples{
-#Normalization and Sax Dataset
 DS <- NormSAX(STMotif::example_dataset, 5)
 }

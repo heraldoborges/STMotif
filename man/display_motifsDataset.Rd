@@ -2,29 +2,37 @@
 % Please edit documentation in R/visualization.R
 \name{display_motifsDataset}
 \alias{display_motifsDataset}
-\title{Plot a heatmap of the dataset and highlight the selected motifs from the list}
+\title{Plot Heatmap with Highlighted Motifs}
 \usage{
-display_motifsDataset(dataset, rankList, alpha)
+display_motifsDataset(dataset, rstmotifs, alpha)
 }
 \arguments{
-\item{dataset}{Numerical dataset}
+\item{dataset}{Data frame or matrix containing numeric values.
+Each column represents a spatial series, each row a time point.}
 
-\item{rankList}{List of ranked motifs}
+\item{rstmotifs}{List of ranked motifs, as returned by
+\code{\link{RankSTMotifs}} or \code{\link{CSAMiningProcess}}.}
 
-\item{alpha}{The cardinality of the SAX alphabet}
+\item{alpha}{Integer. The cardinality of the SAX alphabet (number of
+discretization levels).}
 }
 \value{
-Heatmap dataset with seelected motifs
+A \code{\link[ggplot2]{ggplot}} object showing the heatmap with
+  motif positions highlighted as colored squares.
 }
 \description{
-Plot a heatmap of the dataset and highlight the selected motifs from the list
+Displays the dataset as a heatmap (encoded via SAX binning) and overlays
+colored markers at the positions where the selected motifs occur.
 }
 \examples{
-#Launch all the workflow
-#Plot the result
 D  <- STMotif::example_dataset
-DS <- NormSAX(STMotif::example_dataset,5)
-stmotifs <- SearchSTMotifs(D,DS,4,5,4,10,2,2)
+DS <- NormSAX(STMotif::example_dataset, 5)
+stmotifs <- SearchSTMotifs(D, DS, 4, 5, 4, 10, 2, 2)
 rstmotifs <- RankSTMotifs(stmotifs)
-display_motifsDataset(dataset = STMotif::example_dataset, rstmotifs[c(1:4)],  5)
+display_motifsDataset(
+  dataset = STMotif::example_dataset,
+  rstmotifs[c(1:4)],
+  5
+)
+
 }

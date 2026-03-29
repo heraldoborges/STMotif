@@ -1,11 +1,18 @@
-#' Example of dataset
+#' Example Spatial-Time Series Dataset
 #'
-#' Toy example to launch functions.
-#' @format The dimensions of the dataset are 20 rows and 12 columns and this dataset contains 12 spatial-time series.
+#' A synthetic toy dataset containing 12 spatial-time series, each with
+#' 20 time points. Used to demonstrate the motif discovery functions in
+#' this package.
 #'
+#' @format A data frame with 20 rows and 12 columns. Each column represents
+#'   a spatial-time series and each row represents a time point. All values
+#'   are numeric.
 #'
-#' @usage example_dataset
+#' @source Synthetic data generated for demonstration purposes.
 #'
-#' @keywords example_dataset
+#' @examples
+#' data(example_dataset)
+#' dim(example_dataset)
+#' # [1] 20 12
 #'
 "example_dataset"
